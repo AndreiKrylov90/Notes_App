@@ -22,14 +22,14 @@ def load_from_file() -> list:
     with open(path, 'r', encoding='UTF-8') as file:
         data = json.load(file)
 
-    data = sorted(data, key=lambda x: x['time']) #Added for sort
+    data = sorted(data, key=lambda x: x['time'])
     return data
 
 def save_to_file(note: list) -> None:
     path = file_path()
 
     with open(path, 'w', encoding='UTF-8') as file:
-        json.dump(note, file, ensure_ascii=False, default=str) #Added last argument
+        json.dump(note, file, ensure_ascii=False, default=str)
 
 def show_on_screen(notes: list) -> None:
     decode_keys = dict(
