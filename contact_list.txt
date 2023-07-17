@@ -1,1 +1,0 @@
-[{"first_name": "Алексей", "second_name": "Абрамов", "contacts": "08756"}, {"first_name": "Олег", "second_name": "Ефремов", "contacts": "769"}]
