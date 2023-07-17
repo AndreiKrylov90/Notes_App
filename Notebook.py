@@ -47,8 +47,8 @@ def show_on_screen(notes: list) -> None:
 
 
 def find_note(notes: list) -> None:
-    what = input('Какую заметку ищем, введите заголовок или часть текста?\n>>> ')
-    found = list(filter(lambda el: what.lower() in el['title'].lower()or what in el['body'].lower(), notes))
+    what = input('Какую заметку ищем, введите заголовок или часть текста или дату?\n>>> ')
+    found = list(filter(lambda el: what.lower() in el['title'].lower() or what in el['body'].lower() or what in el['time'], notes))
     if found:
         show_on_screen(found)
     else:
