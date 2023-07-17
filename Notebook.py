@@ -8,7 +8,7 @@
 (команда, данные), можно делать как запрос команды с консоли и
 последующим вводом данных, как-то ещё, на усмотрение студента.
 """
-# Еще надо сделать: сортировка, поиск по элементам
+# Еще надо сделать: сортировка
 
 import os
 import json
@@ -23,6 +23,7 @@ def load_from_file() -> list:
     with open(path, 'r', encoding='UTF-8') as file:
         data = json.load(file)
 
+    data = sorted(data, key=lambda x: x['time']) #Added for sort
     return data
 
 def save_to_file(note: list) -> None:
@@ -47,7 +48,7 @@ def show_on_screen(notes: list) -> None:
 
 def find_note(notes: list) -> None:
     what = input('Какую заметку ищем, введите заголовок или часть текста?\n>>> ')
-    found = list(filter(lambda el: what in el['title'] or what in el['body'], notes))
+    found = list(filter(lambda el: what.lower() in el['title'].lower()or what in el['body'].lower(), notes))
     if found:
         show_on_screen(found)
     else:
@@ -89,6 +90,28 @@ def menu():
     else:
         return choice
     
+
+def delete_note(notes: list) -> None:
+    show_on_screen(notes)
+    deleted = int(input('Укажите номер заметки, которую хотите удалить\n>>>'))
+    notes.pop(deleted-1)
+    print('Новый список заметок: ')
+    show_on_screen(notes)
+
+def change_note(notes: list) -> None:
+    show_on_screen(notes)
+    changed = int(input('Укажите номер заметки, которую хотите изменить\n>>>'))
+    print('Изменяем данную заметку: ')
+    print(notes[changed-1])
+    notes[changed-1] = dict(
+            title=input('Введите новый заголовок:\n>>> '),
+            body=input('Введите новое тело заметки:\n>>> '),
+            time= datetime.datetime.now()
+        )
+    print('Новый список заметок: ')
+    show_on_screen(notes)
+
+
 def main() -> None:
     data = load_from_file()
 
@@ -110,26 +133,6 @@ def main() -> None:
     print('Команда выполнена!')
     print('________')
     main()
-
-def delete_note(notes: list) -> None:
-    show_on_screen(notes)
-    deleted = int(input('Укажите номер заметки, которую хотите удалить\n>>>'))
-    notes.pop(deleted-1)
-    print('Новый список заметок: ')
-    show_on_screen(notes)
-
-def change_note(notes: list) -> None:
-    show_on_screen(notes)
-    changed = int(input('Укажите номер заметки, которую хотите изменить\n>>>'))
-    print('Изменяем данную заметку: ')
-    print(notes[changed-1])
-    notes[changed-1] = dict(
-            title=input('Введите новый заголовок:\n>>> '),
-            body=input('Введите новое тело заметки:\n>>> '),
-            time= datetime.datetime.now()
-        )
-    print('Новый список заметок: ')
-    show_on_screen(notes)
 
 if __name__ == '__main__':
     main()
